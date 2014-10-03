@@ -2898,6 +2898,8 @@ let
     python = python27Full;
   };
 
+  mksh = callPackage ../shells/mksh { };
+
   tcsh = callPackage ../shells/tcsh { };
 
   rush = callPackage ../shells/rush { };
