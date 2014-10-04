@@ -1,16 +1,14 @@
 { stdenv, fetchurl, perl, zlib, bzip2, xz, makeWrapper }:
 
-let version = "1.16.9"; in
+let version = "1.16.15"; in
 
 stdenv.mkDerivation {
   name = "dpkg-${version}";
 
   src = fetchurl {
     url = "mirror://debian/pool/main/d/dpkg/dpkg_${version}.tar.xz";
-    sha256 = "0ykby9x4x2zb7rfj30lfjcsrq2q32z2lnsrl8pbdvb2l9sx7zkbk";
+    sha256 = "0mbbz2f6q5yj8zmvwalaj5x3df2rxbdyhv9gwh5k1nd23f8akg4j";
   };
-
-  patches = [ ./cache-arch.patch ];
 
   configureFlags = "--disable-dselect --with-admindir=/var/lib/dpkg PERL_LIBDIR=$(out)/${perl.libPrefix}";
 
