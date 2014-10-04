@@ -6733,12 +6733,13 @@ let self = _self // overrides; _self = with self; {
   };
 
   NetSMTP = buildPerlPackage {
-    name = "Net-SMTP-1.25";
+    name = "Net-SMTP-1.27";
     src = fetchurl {
-      url = mirror://cpan/authors/id/S/SH/SHAY/libnet-1.25.tar.gz;
-      sha256 = "01f3l4aj3ynl8syyrl122k4bmfds77yw5q36aafrgaq22fnb3b2a";
+      url = mirror://cpan/authors/id/S/SH/SHAY/libnet-1.27.tar.gz;
+      sha256 = "00z8rsb3998kjc5lnhx8rnqaz9f9jvaxvbyji61wsr6z8h46dj56";
     };
     patchPhase = "chmod a-x Configure";
+    buildInputs = [ ExtUtilsMakeMaker ];
     doCheck = false; # The test suite fails, because it requires network access.
   };
 
