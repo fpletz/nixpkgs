@@ -448,7 +448,7 @@ in {
         home = "/root";
         shell = mkDefault cfg.defaultUserShell;
         group = "root";
-        extraGroups = [ "grsecurity" ];
+        #extraGroups = [ "grsecurity" ];
         initialHashedPassword = mkDefault config.security.initialRootPassword;
       };
       nobody = {
