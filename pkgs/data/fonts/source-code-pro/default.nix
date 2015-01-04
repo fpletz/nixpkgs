@@ -10,10 +10,10 @@ let
   buildInputs = map (n: builtins.getAttr n x)
     (builtins.attrNames (builtins.removeAttrs x helperArgNames));
   sourceInfo = rec {
-    version="1.017";
-    name="SourceCodePro";
-    url="mirror://sourceforge/sourcecodepro.adobe/${name}_FontsOnly-${version}.zip";
-    hash="07xjfxin883a3g3admdddxxqyzigihbsnmik0zpjii09cdlb8dl1";
+    version = "1.017";
+    name = "source-code-pro";
+    url = "https://github.com/adobe-fonts/source-code-pro/archive/${version}R.zip";
+    hash = "0igcr4xj36ky7w356s1a3v6j2s17z5k8s3iabbl1g88iyjr6ac0c";
   };
 in
 rec {
@@ -22,7 +22,7 @@ rec {
     sha256 = sourceInfo.hash;
   };
 
-  name = "source-code-pro-${sourceInfo.version}";
+  name = "${sourceInfo.name}-${sourceInfo.version}";
   inherit buildInputs;
 
   phaseNames = ["doUnpack" "installFonts"];
