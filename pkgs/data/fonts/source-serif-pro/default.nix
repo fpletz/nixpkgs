@@ -1,10 +1,10 @@
 { stdenv, fetchurl, unzip }:
 
 stdenv.mkDerivation {
-  name = "source-serif-pro-1.014";
+  name = "source-serif-pro-1.017";
   src = fetchurl {
-    url = "mirror://sourceforge/sourceserifpro.adobe/SourceSerifPro_FontsOnly-1.014.zip";
-    sha256 = "1agack195jqq4g2hmga6f9nwg44garii1g3jpbrdlrwr97rwvqsh";
+    url = "https://github.com/adobe-fonts/source-serif-pro/archive/1.017R.tar.gz";
+    sha256 = "04h24iywjl4fd08x22ypdb3sm979wjfq4wk95r3rk8w376spakrg";
   };
 
   buildInputs = [ unzip ];
