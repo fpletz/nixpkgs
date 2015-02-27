@@ -7062,10 +7062,10 @@ let self = _self // overrides; _self = with self; {
   };
 
   NetSSLeay = buildPerlPackage rec {
-    name = "Net-SSLeay-1.58";
+    name = "Net-SSLeay-1.68";
     src = fetchurl {
       url = "mirror://cpan/authors/id/M/MI/MIKEM/${name}.tar.gz";
-      sha256 = "0mizg2g07fa4c13zpnhmjc87psal5gp5hi23kqpynigmkp0m1p0b";
+      sha256 = "1m2wwzhjwsg0drlhp9w12fl6bsgj69v8gdz72jqrqll3qr7f408p";
     };
     buildInputs = [ pkgs.openssl ];
     OPENSSL_PREFIX = pkgs.openssl;
