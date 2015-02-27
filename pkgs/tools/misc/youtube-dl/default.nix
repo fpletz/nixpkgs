@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, makeWrapper, python, zip, pandoc, ffmpeg }:
+{ stdenv, fetchurl, makeWrapper, python, zip, ffmpeg }:
 
 let
   version = "2015.03.24";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ python makeWrapper ];
-  nativeBuildInputs = [ zip pandoc ];
+  nativeBuildInputs = [ zip ];
 
   patchPhase = ''
     rm youtube-dl
