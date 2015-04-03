@@ -1475,7 +1475,7 @@ let
     libgcrypt = libgcrypt_1_6;
   };
 
-  gnupg = gnupg20;
+  gnupg = gnupg21;
 
   gnuplot = callPackage ../tools/graphics/gnuplot { qt = qt5; };
 
