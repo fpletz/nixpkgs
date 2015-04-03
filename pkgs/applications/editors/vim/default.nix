@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     "--enable-nls"
   ];
 
-  postInstall = "ln -s $out/bin/vim $out/bin/vi";
+  postInstall = "ln -s vim $out/bin/vi";
 
   crossAttrs = {
     configureFlags = [
