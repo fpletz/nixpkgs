@@ -51,9 +51,9 @@ let
 
 in rec {
 
-  inherit (nixos') channel manual containerTarball;
+  inherit (nixos') channel manual;
 
-  minimalTarball = makeContainerTarball {};
+  minimalClosure = makeClosure {};
 
   standardTarball = makeContainerTarball
     { services =
