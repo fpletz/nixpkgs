@@ -30,22 +30,24 @@ let
       networking.firewall.allowPing = true;
     };
 
+  makeConfig = module: (import lib/eval-config.nix {
+      inherit system;
+      modules = [ module minimalModule containerModule versionModule ];
+    }).config;
+
+  makeClosure = module: (makeConfig module).system.build.toplevel;
+
   makeContainerTarball = module:
     let
-      config = (import lib/eval-config.nix {
-        inherit system;
-        modules = [ module minimalModule containerModule versionModule ];
-      }).config;
-
       meta =
         { description = "NixOS system tarball for ${system}";
           maintainers = lib.maintainers.fpletz;
         };
 
-      tarball = config.system.build.tarball;
+      tarball = (makeConfig module).system.build.tarball;
 
     in
-      tarball // { inherit config meta; };
+      tarball // { inherit meta; };
 
 in rec {
 
