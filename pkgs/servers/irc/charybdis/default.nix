@@ -1,25 +1,28 @@
-{ stdenv, fetchFromGitHub, zlib, openssl, bison, flex }:
+{ stdenv, fetchFromGitHub, zlib, libressl, bison, flex, sqlite }:
 
 stdenv.mkDerivation rec {
-  name = "charybdis-3.4.2-git22e4a9b";
+  name = "charybdis-3.5.0-rc1-a0eb676";
 
   src = fetchFromGitHub {
-    owner = "atheme";
+    owner = "darkfasel";
     repo = "charybdis";
-    rev = "22e4a9bc2b34915bf6e907e90d60bf7d002c7dc5";
-    sha256 = "0i22hc9al1g6ffa6vqw0lxdy1zj2y0ixgmmhi0kbc3j6xqp78kwj";
+    rev = "a0eb6762559497dbbcd4a712ae47b5455a59a56c";
+    sha256 = "1wc5zbxj2xv2dq0zswpavlcn4h7c4160s74677bql5xpjqjfixkw";
   };
 
   configureFlags = [
     "--sysconfdir=/etc/charybdis"
     "--localstatedir=/var"
     "--disable-assert"
-    "--enable-openssl=${openssl}"
+    "--enable-openssl=${libressl}"
     "--enable-ipv6"
+    "--with-shared-sqlite"
     "--with-program-prefix=charybdis-"
   ];
 
-  buildInputs = [ zlib openssl bison flex ];
+  buildInputs = [ zlib libressl bison flex sqlite ];
+
+  enableParallelBuilding = true;
 
   meta = {
     description = "Charybdis IRC Daemon";
