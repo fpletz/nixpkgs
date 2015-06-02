@@ -730,6 +730,8 @@ let
 
   bootchart = callPackage ../tools/system/bootchart { };
 
+  borgbackup = callPackage ../tools/backup/borgbackup { };
+
   boxfs = callPackage ../tools/filesystems/boxfs { };
 
   brasero = callPackage ../tools/cd-dvd/brasero { };
