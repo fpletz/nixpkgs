@@ -1,0 +1,27 @@
+From db02f99fdb6bbeb7ad872bbf836138ca3992ae7a Mon Sep 17 00:00:00 2001
+From: Guy Harris <guy@alum.mit.edu>
+Date: Thu, 12 Nov 2015 09:44:47 -0800
+Subject: [PATCH] Fix installation of desktop files.
+
+Change-Id: I33ed9741db9a50098b8c7c85409f3e6a0c2e2f15
+Reviewed-on: https://code.wireshark.org/review/11772
+Reviewed-by: Guy Harris <guy@alum.mit.edu>
+---
+ Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index d3212d1..e3a12db 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1499,7 +1499,7 @@ if NOT_OS_X
+ 	if test x$(DESKTOP_FILE_INSTALL) != x ; then \
+ 		$(DESKTOP_FILE_INSTALL) --dir $(DESTDIR)$(datadir)/applications $(srcdir)/wireshark.desktop  $(srcdir)/wireshark-gtk.desktop ; \
+ 	else \
+-		install -m 644 $(srcdir)/wireshark.desktop $(DESTDIR)$(datadir)/applications/wireshark.desktop $(DESTDIR)$(datadir)/applications/wireshark-gtk.desktop; \
++		install -m 644 $(srcdir)/wireshark.desktop $(srcdir)/wireshark-gtk.desktop $(DESTDIR)$(datadir)/applications; \
+ 	fi
+ 	for size in 16 24 32 48 64 128 256; \
+ 	do \
+-- 
+1.7.9.5

@@ -22,6 +22,8 @@ stdenv.mkDerivation {
     sha256 = "1qs7yvh85pixlbirvik5qb2vq2wiv5xs1qdql23kr4ig40nnpx0i";
   };
 
+  patches = [ ./wireshark-fix-desktop-install.patch ];
+
   buildInputs = [
     bison flex perl pkgconfig libpcap lua5 libssl libgcrypt gnutls
     geoip libnl c-ares python libcap glib
