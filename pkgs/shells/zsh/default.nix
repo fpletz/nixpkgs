@@ -23,6 +23,10 @@ stdenv.mkDerivation {
 
   preConfigure = ''
     configureFlags="--enable-maildir-support --enable-multibyte --enable-zprofile=$out/etc/zprofile --with-tcsetpgrp --enable-pcre"
+    ${if (builtins.pathExists /etc/NIXOS) then ''
+        substituteInPlace ./configure --replace /usr/local/share /run/current-system/sw/share
+      '' else ""
+    }
   '';
 
   # Some tests fail on hydra, see

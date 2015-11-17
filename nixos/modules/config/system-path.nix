@@ -118,7 +118,8 @@ in
         "/share/terminfo"
         "/share/themes"
         "/share/vim-plugins"
-      ];
+      ]
+      ++ lib.optional config.programs.zsh.enable "/share/zsh/site-functions";
 
     system.path = pkgs.buildEnv {
       name = "system-path";
