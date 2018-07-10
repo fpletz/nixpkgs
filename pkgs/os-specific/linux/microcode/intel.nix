@@ -1,34 +1,37 @@
-{ stdenv, fetchurl, libarchive }:
+{ stdenv, fetchurl, iucode_tool }:
 
-stdenv.mkDerivation rec {
+let
+
+  version = "20180703";
+  debianVersion = "3.${version}.2";
+
+  microcodeFile = if stdenv.system == "x86_64-linux"
+    then "intel-microcode-64.bin"
+    else "intel-microcode.bin";
+
+in stdenv.mkDerivation {
   name = "microcode-intel-${version}";
-  version = "20180312";
 
   src = fetchurl {
-    url = "https://downloadmirror.intel.com/27591/eng/microcode-${version}.tgz";
-    sha256 = "0yg7q5blcqgq8jyjxhn9n48rxws77ylqzyn4kn10l6yzwan1yf0b";
+    url = "https://salsa.debian.org/hmh/intel-microcode/-/archive/debian/3.20180703.2/intel-microcode-debian-.tar.gz";
+    sha256 = "0x0ahki6qkj1sj6iwpvi8k7v7rid7qj2xglblap2kypszgyzn4h8";
   };
 
-  buildInputs = [ libarchive ];
+  nativeBuildInputs = [ iucode_tool ];
 
-  sourceRoot = ".";
-
-  buildPhase = ''
-    gcc -O2 -Wall -o intel-microcode2ucode ${./intel-microcode2ucode.c}
-    ./intel-microcode2ucode microcode.dat
+  postBuild = ''
+    iucode_tool --write-earlyfw=intel-ucode.img ${microcodeFile}
   '';
 
   installPhase = ''
-    mkdir -p $out kernel/x86/microcode
-    mv microcode.bin kernel/x86/microcode/GenuineIntel.bin
-    echo kernel/x86/microcode/GenuineIntel.bin | bsdcpio -o -H newc -R 0:0 > $out/intel-ucode.img
+    install -D -t $out intel-ucode.img
   '';
 
   meta = with stdenv.lib; {
     homepage = http://www.intel.com/;
     description = "Microcode for Intel processors";
     license = licenses.unfreeRedistributableFirmware;
-    maintainers = with maintainers; [ wkennington ];
+    maintainers = with maintainers; [ fpletz ];
     platforms = platforms.linux;
   };
 }
