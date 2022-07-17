@@ -1,26 +1,25 @@
-{ lib, stdenv, fetchFromGitHub, autoconf, automake, libtool, pkg-config, perl }:
+{ lib, stdenv, fetchurl, perl }:
 
 stdenv.mkDerivation rec {
   pname = "libxcrypt";
   version = "4.4.28";
 
-  src = fetchFromGitHub {
-    owner = "besser82";
-    repo = "libxcrypt";
-    rev = "v${version}";
-    sha256 = "sha256-Ohf+RCOXnoCxAFnXXV9e2TCqpfZziQl+FGJTGDSQTF0=";
+  src = fetchurl {
+    url = "https://github.com/besser82/libxcrypt/releases/download/v${version}/libxcrypt-${version}.tar.xz";
+    sha256 = "sha256-npNoEfn60R28ozyhm9l8VcUus8oVkB8nreBGzHnmnoc=";
   };
 
-  preConfigure = ''
-    patchShebangs autogen.sh
-    ./autogen.sh
-  '';
-
   configureFlags = [
-    "--disable-werror"
+    "--enable-hashes=all"
+    "--enable-obsolete-api=glibc"
+    "--disable-failure-tokens"
   ];
 
-  nativeBuildInputs = [ autoconf automake libtool pkg-config perl ];
+  nativeBuildInputs = [
+    perl
+  ];
+
+  enableParallelBuilding = true;
 
   doCheck = true;
 
