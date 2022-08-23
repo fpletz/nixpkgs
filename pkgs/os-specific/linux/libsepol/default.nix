@@ -2,14 +2,14 @@
 
 stdenv.mkDerivation rec {
   pname = "libsepol";
-  version = "3.3";
+  version = "3.4";
   se_url = "https://github.com/SELinuxProject/selinux/releases/download";
 
   outputs = [ "bin" "out" "dev" "man" ];
 
   src = fetchurl {
     url = "${se_url}/${version}/libsepol-${version}.tar.gz";
-    sha256 = "12r39ygn7aa1kz52wibfr4520m0cp75hlrn3i6rnjqa6p0zdz5rd";
+    sha256 = "sha256-/Cd6xbUtWdLNge7IsczNRQMB2LVNndSKmTrqBXfPAzY=";
   };
 
   postPatch = lib.optionalString stdenv.hostPlatform.isStatic ''
