@@ -1,6 +1,6 @@
 { lib, stdenv, llvm_meta, version
 , monorepoSrc, runCommand
-, cmake, python3, libllvm, libcxxabi
+, cmake, python3, libllvm, libcxxabi, libxcrypt
 }:
 
 let
@@ -37,6 +37,8 @@ stdenv.mkDerivation {
     "-DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON"
     "-DCMAKE_C_COMPILER_TARGET=${stdenv.hostPlatform.config}"
     "-DCMAKE_ASM_COMPILER_TARGET=${stdenv.hostPlatform.config}"
+  ] ++ lib.optionals (haveLibc && !isMusl) [
+    "-DSANITIZER_COMMON_CFLAGS=-I${libxcrypt}/include"
   ] ++ lib.optionals (useLLVM || bareMetal || isMusl) [
     "-DCOMPILER_RT_BUILD_SANITIZERS=OFF"
     "-DCOMPILER_RT_BUILD_XRAY=OFF"
