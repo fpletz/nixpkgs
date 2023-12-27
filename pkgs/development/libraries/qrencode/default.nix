@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, pkg-config, SDL2, libpng, libiconv, libobjc }:
+{ lib, stdenv, fetchurl, pkg-config, SDL2, libpng, libiconv, libobjc, qrencode }:
 
 stdenv.mkDerivation rec {
   pname = "qrencode";
@@ -16,13 +16,9 @@ stdenv.mkDerivation rec {
   buildInputs = [ libiconv libpng ]
     ++ lib.optionals stdenv.isDarwin [ libobjc ];
 
-  configureFlags = [
-    "--with-tests"
-  ];
-
   nativeCheckInputs = [ SDL2 ];
 
-  doCheck = true;
+  doCheck = false;
 
   checkPhase = ''
     runHook preCheck
@@ -33,6 +29,11 @@ stdenv.mkDerivation rec {
 
     runHook postCheck
   '';
+
+  passthru.tests = qrencode.overrideAttrs (finalAttrs: previousAttrs: {
+    configureFlags = [ "--with-tests" ];
+    doCheck = true;
+  });
 
   meta = with lib; {
     homepage = "https://fukuchi.org/works/qrencode/";
