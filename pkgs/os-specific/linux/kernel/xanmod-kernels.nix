@@ -6,8 +6,8 @@ let
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
   ltsVariant = {
-    version = "6.1.74";
-    hash = "sha256-PqCojvh7JwTcavtQHB8l/WxCTg94ndOy9KGVXsmGO/Y=";
+    version = "6.1.75";
+    hash = "sha256-SXaC2O5kBfH8qiQW4j9c8GhONTziXVLqDCJzDj5SKcI=";
     variant = "lts";
   };
 
