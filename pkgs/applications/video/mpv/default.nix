@@ -140,6 +140,9 @@ in stdenv'.mkDerivation (finalAttrs: {
     # Disable whilst Swift isn't supported
     (lib.mesonEnable "swift-build" swiftSupport)
     (lib.mesonEnable "macos-cocoa-cb" swiftSupport)
+  ] ++ lib.optionals stdenv.isDarwin [
+    # Toggle explicitly because it fails on darwin
+    (lib.mesonEnable "videotoolbox-pl" vulkanSupport)
   ];
 
   mesonAutoFeatures = "auto";
