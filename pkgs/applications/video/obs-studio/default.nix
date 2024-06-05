@@ -6,6 +6,7 @@
 , fetchFromGitHub
 , fetchpatch
 , addDriverRunpath
+, fetchurl
 , cmake
 , fdk_aac
 , ffmpeg
@@ -59,6 +60,14 @@
 
 let
   inherit (lib) optional optionals;
+  libcef_obs = libcef.overrideAttrs (_: {
+    version = "5060";
+    src = fetchurl {
+      url = "https://cdn-fastly.obsproject.com/downloads/cef_binary_5060_linux_x86_64_v3.tar.xz";
+      hash = "sha256-ElOmo2w7isW17Om/226uardeSVFjdfxHXi6HF5Wtm+o=1";
+    };
+    postUnpack = "rm -r */build";
+  });
 in
 
 stdenv.mkDerivation (finalAttrs: {
@@ -117,7 +126,7 @@ stdenv.mkDerivation (finalAttrs: {
     curl
     ffmpeg
     jansson
-    libcef
+    libcef_obs
     libjack2
     libv4l
     libxkbcommon
@@ -153,13 +162,13 @@ stdenv.mkDerivation (finalAttrs: {
   # Copied from the obs-linuxbrowser
   postUnpack = ''
     mkdir -p cef/Release cef/Resources cef/libcef_dll_wrapper/
-    for i in ${libcef}/share/cef/*; do
+    for i in ${libcef_obs}/share/cef/*; do
       ln -s $i cef/Release/
       ln -s $i cef/Resources/
     done
-    ln -s ${libcef}/lib/libcef.so cef/Release/
-    ln -s ${libcef}/lib/libcef_dll_wrapper.a cef/libcef_dll_wrapper/
-    ln -s ${libcef}/include cef/
+    ln -s ${libcef_obs}/lib/libcef.so cef/Release/
+    ln -s ${libcef_obs}/lib/libcef_dll_wrapper.a cef/libcef_dll_wrapper/
+    ln -s ${libcef_obs}/include cef/
   '';
 
   cmakeFlags = [
@@ -207,7 +216,7 @@ stdenv.mkDerivation (finalAttrs: {
     addDriverRunpath $out/lib/obs-plugins/*.so
 
     # Link libcef again after patchelfing other libs
-    ln -s ${libcef}/lib/* $out/lib/obs-plugins/
+    ln -s ${libcef_obs}/lib/* $out/lib/obs-plugins/
   '';
 
   passthru.updateScript = nix-update-script { };
