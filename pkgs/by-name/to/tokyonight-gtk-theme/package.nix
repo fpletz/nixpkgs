@@ -13,7 +13,7 @@ let
   pname = "tokyonight-gtk-theme";
   colorVariantList = [
     "dark"
-    "light"
+    #"light"
   ];
 
 in
@@ -43,9 +43,11 @@ stdenvNoCC.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-    mkdir -p $out/share/themes
+    mkdir -p $out/share/{themes,icons}
     cd themes
     ./install.sh -n Tokyonight -c ${lib.concatStringsSep " " (if colorVariants != [] then colorVariants else colorVariantList)} --tweaks macos -d "$out/share/themes"
+    cd ..
+    cp -r icons/Tokyonight-Dark $out/share/icons
     runHook postInstall
   '';
 
