@@ -1,4 +1,5 @@
-{ lib
+{ config
+, lib
 , stdenv
 , fetchFromGitHub
 , cmake
@@ -8,6 +9,8 @@
 , opencv
 , qt6
 , curl
+, withCUDA ? config.cudaSupport
+, cudaPackages
 }:
 
 stdenv.mkDerivation rec {
@@ -22,7 +25,11 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ cmake ninja ];
-  buildInputs = [ obs-studio onnxruntime opencv qt6.qtbase curl ];
+  buildInputs = [ obs-studio onnxruntime opencv qt6.qtbase curl ]
+  ++ lib.optionals withCUDA [
+    cudaPackages.cuda_nvcc
+    cudaPackages.cuda_cudart
+  ];
 
   dontWrapQtApps = true;
 
@@ -31,7 +38,8 @@ stdenv.mkDerivation rec {
     "-DCMAKE_MODULE_PATH:PATH=${src}/cmake"
     "-DUSE_SYSTEM_ONNXRUNTIME=ON"
     "-DUSE_SYSTEM_OPENCV=ON"
-    "-DDISABLE_ONNXRUNTIME_GPU=ON"
+  ] ++ lib.optionals withCUDA [
+    "-DCUDA_TOOLKIT_ROOT_DIR=${cudaPackages.cuda_cudart}"
   ];
 
   buildPhase = ''
