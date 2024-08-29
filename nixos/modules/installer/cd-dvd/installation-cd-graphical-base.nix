@@ -62,8 +62,6 @@ with lib;
 
     # Firefox for reading the manual.
     firefox
-
-    mesa-demos
   ];
 
 }

@@ -17,5 +17,5 @@
   # Enable sound in virtualbox appliances.
   hardware.pulseaudio.enable = true;
 
-  environment.systemPackages = [ pkgs.mesa-demos pkgs.firefox ];
+  environment.systemPackages = [ pkgs.firefox ];
 }
