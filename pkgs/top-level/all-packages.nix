@@ -9618,6 +9618,7 @@ with pkgs;
   memtester = callPackage ../tools/system/memtester { };
 
   mesa-demos = callPackage ../tools/graphics/mesa-demos { };
+  glxinfo = lib.addMetaAttrs { mainProgram = "glxinfo"; } mesa-demos.glxinfo;
 
   mhonarc = perlPackages.MHonArc;
 

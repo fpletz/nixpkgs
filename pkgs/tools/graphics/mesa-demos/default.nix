@@ -62,6 +62,16 @@ stdenv.mkDerivation rec {
     "-Dosmesa=disabled"
   ];
 
+  postInstall = ''
+    moveToOutput bin/glxinfo "$glxinfo"
+    ln -sft "$out/bin" "$glxinfo/bin/glxinfo"
+  '';
+
+  outputs = [
+    "out"
+    "glxinfo"
+  ];
+
   meta = with lib; {
     inherit (mesa.meta) homepage platforms;
     description = "Collection of demos and test programs for OpenGL and Mesa";
