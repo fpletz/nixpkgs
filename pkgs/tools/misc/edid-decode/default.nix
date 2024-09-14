@@ -1,12 +1,15 @@
-{ lib
-, stdenv
-, fetchgit
-, unstableGitUpdater
+{
+  lib,
+  stdenv,
+  fetchgit,
+  unstableGitUpdater,
+  meson,
+  ninja,
 }:
 
 stdenv.mkDerivation {
   pname = "edid-decode";
-  version = "0-unstable-2024-04-02";
+  version = "0-unstable-2024-09-03";
 
   outputs = [
     "out"
@@ -15,17 +18,14 @@ stdenv.mkDerivation {
 
   src = fetchgit {
     url = "https://git.linuxtv.org/edid-decode.git";
-    rev = "3d635499e4aca3319f0796ba787213c981c5a770";
-    hash = "sha256-bqzO39YM/3h9p37xaGJAw9xERgWOD+4yqO/XQiq/QqM=";
+    rev = "88d457cbcabcc3ce25844b4b9e613f36914de156";
+    hash = "sha256-DR03kjcnYTeJNpiYB8LAG61Wr7K9xDYToejwTTjg61Q=";
   };
 
-  preBuild = ''
-    export DESTDIR=$out
-    export bindir=/bin
-    export mandir=/share/man
-  '';
-
-  enableParallelBuilding = true;
+  nativeBuildInputs = [
+    meson
+    ninja
+  ];
 
   passthru.updateScript = unstableGitUpdater { };
 
