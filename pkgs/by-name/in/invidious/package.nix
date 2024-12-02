@@ -94,6 +94,12 @@ crystal.buildCrystalPackage rec {
       url = "https://github.com/iv-org/invidious/compare/aa33d9b7ec5a41867c256542653ad8465fe22e7f~1...3ac8978e96069e58a02e91fc29bf52b8fc651d5c.patch";
       hash = "sha256-xENsVRfEE9ACLiniOgGMDfdC0ZtJge1e1Lak2orLJro=";
     })
+    # Always select default audio track for DASH streams: https://github.com/iv-org/invidious/pull/5094
+    (fetchpatch {
+      name = "invidious-select-default-audio-track.patch";
+      url = "https://github.com/iv-org/invidious/pull/5094/commits/84a80a0d950542efc219d12ed6281713b4461746.patch";
+      hash = "sha256-947d7JS3qJNABCTOWy7+j8Uyc6BcFCuVBgl2GtCMlPA=";
+    })
   ];
 
   format = "crystal";
