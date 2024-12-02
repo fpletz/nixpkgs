@@ -100,6 +100,10 @@ crystal.buildCrystalPackage rec {
       url = "https://github.com/iv-org/invidious/pull/5094/commits/84a80a0d950542efc219d12ed6281713b4461746.patch";
       hash = "sha256-947d7JS3qJNABCTOWy7+j8Uyc6BcFCuVBgl2GtCMlPA=";
     })
+    (fetchpatch {
+      url = "https://github.com/iv-org/invidious/pull/4439.patch";
+      hash = "sha256-IKF4zLqRrzXqwXDVdsQ0A9z6rNfJesCMEuxKU56/+Z8=";
+    })
   ];
 
   format = "crystal";
