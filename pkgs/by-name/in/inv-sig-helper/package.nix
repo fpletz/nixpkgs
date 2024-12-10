@@ -2,6 +2,7 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
+  fetchpatch,
 
   # nativeBuildInputs
   pkg-config,
@@ -25,6 +26,13 @@ rustPlatform.buildRustPackage {
   };
 
   cargoHash = "sha256-Y9q64ltv2QRtRUy5t40JIfwFh8ryO1D0Gdg7xO1azws=";
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/iv-org/inv_sig_helper/commit/ac0269f1586df5a853c4321256866bcbea89802b.patch";
+      hash = "sha256-Hcb/vEKlNXlawDQ7o0PD1XIJoz44hlioMTmqh+4WnTQ=";
+    })
+  ];
 
   nativeBuildInputs = [
     pkg-config
