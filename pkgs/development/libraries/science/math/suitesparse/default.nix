@@ -1,6 +1,7 @@
 {
   lib,
   stdenv,
+  gcc13Stdenv,
   fetchFromGitHub,
   gfortran,
   blas,
@@ -15,7 +16,11 @@
   openmp ? null,
 }:
 
-stdenv.mkDerivation rec {
+let
+  stdenv' = if enableCuda then gcc13Stdenv else stdenv;
+in
+
+stdenv'.mkDerivation rec {
   pname = "suitesparse";
   version = "5.13.0";
 
