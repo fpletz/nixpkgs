@@ -45,6 +45,8 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+
   nativeBuildInputs = [
     pkg-config
     intltool
