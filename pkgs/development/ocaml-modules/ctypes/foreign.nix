@@ -24,6 +24,8 @@ buildDunePackage rec {
     lwt
   ];
 
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types";
+
   meta = ctypes.meta // {
     description = "Dynamic access to foreign C libraries using Ctypes";
   };
