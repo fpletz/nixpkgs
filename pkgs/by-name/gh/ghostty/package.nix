@@ -24,6 +24,7 @@
   oniguruma,
   pandoc,
   pkg-config,
+  removeReferencesTo,
   wrapGAppsHook4,
   zig_0_13,
   zlib,
@@ -51,6 +52,7 @@ stdenv.mkDerivation (final: {
     ncurses
     pandoc
     pkg-config
+    removeReferencesTo
     wrapGAppsHook4
     zig_hook
   ];
@@ -111,6 +113,7 @@ stdenv.mkDerivation (final: {
   '';
 
   preFixup = ''
+    remove-references-to -t ${final.deps} $out/bin/ghostty
     gappsWrapperArgs+=(--prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libX11 ]}")
   '';
 
