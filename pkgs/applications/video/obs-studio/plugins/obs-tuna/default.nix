@@ -15,7 +15,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "obs-tuna";
-  version = "1.9.9";
+  version = "1.9.9-unstable-2025-01-20";
 
   nativeBuildInputs = [
     cmake
@@ -34,8 +34,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "univrsal";
     repo = "tuna";
-    rev = "v${finalAttrs.version}";
-    hash = "sha256-qwOAidnCGZSwTahgbyf1K0KgoDvYpqDAQXM3l1lfZXg=";
+    rev = "91fc3fd184fec472045ae6647b74c615f072bb54";
+    hash = "sha256-akDWfNHPnW8t/WTAHi4kypQgmBcEs9+GGIrOs/VaD1U=";
     fetchSubmodules = true;
   };
 
