@@ -1120,10 +1120,9 @@ in
     (mkRenamedOptionModule [ "services" "nginx" "proxyCache" "keysZoneName" ] [ "services" "nginx" "proxyCachePath" "" "keysZoneName" ])
     (mkRenamedOptionModule [ "services" "nginx" "proxyCache" "enable" ] [ "services" "nginx" "proxyCachePath" "" "enable" ])
     (mkRemovedOptionModule [ "services" "nginx" "recommendedZstdSettings" ] ''
-      The Nginx zstd module has known bugs and is not maintained well. We cannot
-      recommend using it. You may enable `services.nginx.experimentalZstdSettings`
-      instead which adds the same configuration as the removed option at your own
-      risk.
+      The zstd module for Nginx has known bugs and is not maintained well.
+      It is not generally recommend to use it. You may enable anyway by setting `services.nginx.experimentalZstdSettings`
+      which adds the same configuration as the removed option back.
     '')
   ];
 
