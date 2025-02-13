@@ -220,7 +220,7 @@ let
         gzip_types ${lib.concatStringsSep " " compressMimeTypes};
       ''}
 
-      ${optionalString cfg.recommendedZstdSettings ''
+      ${optionalString cfg.experimentalZstdSettings ''
         zstd on;
         zstd_comp_level 9;
         zstd_min_length 256;
@@ -527,11 +527,11 @@ in
         '';
       };
 
-      recommendedZstdSettings = mkOption {
+      experimentalZstdSettings = mkOption {
         default = false;
         type = types.bool;
         description = ''
-          Enable recommended zstd settings.
+          Enable buggy zstd module with recommended settings.
           Learn more about compression in Zstd format [here](https://github.com/tokers/zstd-nginx-module).
 
           This adds `pkgs.nginxModules.zstd` to `services.nginx.additionalModules`.
@@ -1119,6 +1119,12 @@ in
     (mkRenamedOptionModule [ "services" "nginx" "proxyCache" "keysZoneSize" ] [ "services" "nginx" "proxyCachePath" "" "keysZoneSize" ])
     (mkRenamedOptionModule [ "services" "nginx" "proxyCache" "keysZoneName" ] [ "services" "nginx" "proxyCachePath" "" "keysZoneName" ])
     (mkRenamedOptionModule [ "services" "nginx" "proxyCache" "enable" ] [ "services" "nginx" "proxyCachePath" "" "enable" ])
+    (mkRemovedOptionModule [ "services" "nginx" "recommendedZstdSettings" ] ''
+      The Nginx zstd module has known bugs and is not maintained well. We cannot
+      recommend using it. You may enable `services.nginx.experimentalZstdSettings`
+      instead which adds the same configuration as the removed option at your own
+      risk.
+    '')
   ];
 
   config = mkIf cfg.enable {
@@ -1218,7 +1224,7 @@ in
     }) vhostCertNames;
 
     services.nginx.additionalModules = optional cfg.recommendedBrotliSettings pkgs.nginxModules.brotli
-      ++ lib.optional cfg.recommendedZstdSettings pkgs.nginxModules.zstd;
+      ++ lib.optional cfg.experimentalZstdSettings pkgs.nginxModules.zstd;
 
     services.nginx.virtualHosts.localhost = mkIf cfg.statusPage {
       serverAliases = [ "127.0.0.1" ] ++ lib.optional config.networking.enableIPv6 "[::1]";
