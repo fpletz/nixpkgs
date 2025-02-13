@@ -531,7 +531,7 @@ in
         default = false;
         type = types.bool;
         description = ''
-          Enable buggy zstd module with recommended settings.
+          Enable alpha quality zstd module with recommended settings.
           Learn more about compression in Zstd format [here](https://github.com/tokers/zstd-nginx-module).
 
           This adds `pkgs.nginxModules.zstd` to `services.nginx.additionalModules`.
